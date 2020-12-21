@@ -6,7 +6,7 @@
         <router-link
           v-for="set in response"
           :key="set.code"
-          :to="`/set/${set.name}`"
+          :to="`/set/${set.code}`"
           class="pk-set"
         > 
         <div class="img">

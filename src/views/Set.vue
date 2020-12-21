@@ -14,8 +14,8 @@ export default {
   mounted() {
     this.$http
       .all([
-        this.$http.get("https://api.pokemontcg.io/v1/sets?name=" + this.$route.params.id),
-        this.$http.get("https://api.pokemontcg.io/v1/cards?set=" + this.$route.params.id),
+        this.$http.get("https://api.pokemontcg.io/v1/sets/" + this.$route.params.id),
+        this.$http.get("https://api.pokemontcg.io/v1/cards?setCode=" + this.$route.params.id + "&pageSize=1000"),
       ])
       .then(
         this.$http.spread((data1, data2) => {
