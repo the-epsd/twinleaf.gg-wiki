@@ -7,6 +7,7 @@
           v-for="set in response"
           :key="set.code"
           :to="`/set/${set.code}`"
+          :class="{ active: set.code === $route.params.id }"
           class="pk-set"
         >
           <div class="img">
@@ -135,6 +136,7 @@ body {
     display: flex;
     justify-content: flex-start;
     transition: all 0.2s ease;
+    border-radius: 3px;
     // border-bottom: 1px solid #535353;
     // border-top: 1px solid #535353;
 
@@ -167,5 +169,9 @@ body {
       transition: all 0.2s ease;
     }
   }
+}
+
+.active {
+  background-color: #535353;  
 }
 </style>
