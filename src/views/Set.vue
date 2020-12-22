@@ -11,28 +11,42 @@ export default {
       cards: [],
     };
   },
-  mounted() {
-    this.$http
-      .all([
-        this.$http.get("https://api.pokemontcg.io/v1/sets/" + this.$route.params.id),
-        this.$http.get("https://api.pokemontcg.io/v1/cards?setCode=" + this.$route.params.id + "&pageSize=1000"),
-      ])
-      .then(
-        this.$http.spread((data1, data2) => {
-          // output of req.
-          console.log("data1", data1.data, "data2", data2.data);
-        })
-      );
-    // this.$http
-    //   .get("https://api.pokemontcg.io/v1/cards?set=" + this.$route.params.id)
-    //   .then((response) => {
-    //     this.response = response.data.cards;
-    //     console.log(this.response);
-    //   })
-    //   .catch(function (error) {
-    //     // handle error
-    //     console.log(error);
-    //   });
+  created() {
+        this.fetchData()
+  },
+  watch: {
+    '$route': 'fetchData'
+  },
+  methods: {
+    fetchData() {
+      this.$http
+        .all([
+          this.$http.get(
+            "https://api.pokemontcg.io/v1/sets/" + this.$route.params.id
+          ),
+          this.$http.get(
+            "https://api.pokemontcg.io/v1/cards?setCode=" +
+              this.$route.params.id +
+              "&pageSize=1000"
+          ),
+        ])
+        .then(
+          this.$http.spread((data1, data2) => {
+            // output of req.
+            console.log("data1", data1.data, "data2", data2.data);
+          })
+        );
+      // this.$http
+      //   .get("https://api.pokemontcg.io/v1/cards?set=" + this.$route.params.id)
+      //   .then((response) => {
+      //     this.response = response.data.cards;
+      //     console.log(this.response);
+      //   })
+      //   .catch(function (error) {
+      //     // handle error
+      //     console.log(error);
+      //   });
+    },
   },
 };
 </script>

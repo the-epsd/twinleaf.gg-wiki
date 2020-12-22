@@ -1,7 +1,9 @@
 <template>
   <div id="app" class="app-body">
     <div id="nav" class="nav">
-      <h1>TCG-wiki</h1>
+      <router-link to="/">
+        <h1>TCG-wiki</h1>
+      </router-link>
       <div class="pk-sets" v-if="gotResponse">
         <router-link
           v-for="set in response"
@@ -38,7 +40,7 @@ export default {
       .get("https://api.pokemontcg.io/v1/sets")
       .then((response) => {
         this.gotResponse = true;
-        this.response = response.data.sets;
+        this.response = response.data.sets.reverse();
         console.log(this.response);
       })
       .catch(function (error) {
@@ -107,8 +109,6 @@ body {
 }
 
 .pk-sets {
-  display: flex;
-  flex-direction: column-reverse;
   overflow-y: auto;
   height: calc(100vh - 60px);
 
