@@ -1,45 +1,55 @@
 <template>
-  <div id="app" class="app-body">
-    <div id="nav" class="nav">
-      <router-link to="/">
-        <h1>TCG-wiki</h1>
-      </router-link>
-      <div class="pk-sets" v-if="gotResponse">
-        <router-link
-          v-for="set in response"
-          :key="set.code"
-          :to="`/set/${set.code}`"
-          :class="{ active: set.code === $route.params.id }"
-          class="pk-set"
-        >
-          <div class="img">
-            <img :src="`${set.symbolUrl}`" :alt="`${set.name}`" />
-          </div>
-          <span>
-            {{ set.name }}
-          </span>
+  <div id="app">
+    <div v-if="loaded" class="app-body">
+      <div id="nav" class="nav">
+        <router-link to="/">
+          <h1>TCG-wiki</h1>
         </router-link>
+        <div class="pk-sets" v-if="loaded">
+          <router-link
+            v-for="set in response"
+            :key="set.code"
+            :to="`/set/${set.code}`"
+            :class="{ active: set.code === $route.params.id }"
+            class="pk-set"
+          >
+            <div class="img">
+              <img :src="`${set.symbolUrl}`" :alt="`${set.name}`" />
+            </div>
+            <span>
+              {{ set.name }}
+            </span>
+          </router-link>
+        </div>
+      </div>
+      <div class="content">
+        <router-view />
       </div>
     </div>
-    <div class="content">
-      <router-view />
+    <div v-else class="loader">
+      <loader></loader>
     </div>
   </div>
 </template>
 
 <script>
+import Loader from './components/Loader.vue';
+
 export default {
+  components: {
+    Loader,
+  },
   data() {
     return {
-      gotResponse: false,
       response: [],
+      loaded: false,
     };
   },
   mounted() {
     this.$http
       .get("https://api.pokemontcg.io/v1/sets")
       .then((response) => {
-        this.gotResponse = true;
+        this.loaded = true;
         this.response = response.data.sets.reverse();
         console.log(this.response);
       })
@@ -172,6 +182,13 @@ body {
 }
 
 .active {
-  background-color: #535353;  
+  background-color: #535353;
+}
+
+.loader {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
