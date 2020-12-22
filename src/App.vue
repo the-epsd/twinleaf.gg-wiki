@@ -2,16 +2,16 @@
   <div id="app" class="app-body">
     <div id="nav" class="nav">
       <h1>TCG-wiki</h1>
-      <div class="pk-sets">
+      <div class="pk-sets" v-if="gotResponse">
         <router-link
           v-for="set in response"
           :key="set.code"
           :to="`/set/${set.code}`"
           class="pk-set"
-        > 
-        <div class="img">
-          <img :src="`${set.symbolUrl}`" :alt="`${set.name}`" />
-        </div>
+        >
+          <div class="img">
+            <img :src="`${set.symbolUrl}`" :alt="`${set.name}`" />
+          </div>
           <span>
             {{ set.name }}
           </span>
@@ -28,6 +28,7 @@
 export default {
   data() {
     return {
+      gotResponse: false,
       response: [],
     };
   },
@@ -35,6 +36,7 @@ export default {
     this.$http
       .get("https://api.pokemontcg.io/v1/sets")
       .then((response) => {
+        this.gotResponse = true;
         this.response = response.data.sets;
         console.log(this.response);
       })
@@ -89,7 +91,6 @@ body {
     height: 100vh;
     background: #181818;
     padding: 10px;
-    font-size: 400;
 
     h1 {
       font-size: 22px;
@@ -105,6 +106,8 @@ body {
 }
 
 .pk-sets {
+  display: flex;
+  flex-direction: column-reverse;
   overflow-y: auto;
   height: calc(100vh - 60px);
 
@@ -131,18 +134,37 @@ body {
   .pk-set {
     display: flex;
     justify-content: flex-start;
-    
+    transition: all 0.2s ease;
+    // border-bottom: 1px solid #535353;
+    // border-top: 1px solid #535353;
+
     .img {
+      position: relative;
       height: 30px;
       width: 30px;
+      // background-color:#535353;
+      padding: 5px;
+      padding-right: 10px;
       img {
-        height: auto;
-        width: 30px;
+        display: block;
+        height: 30px;
+        width: auto;
+        max-width: 30px;
+        margin: 0 auto;
       }
     }
 
     span {
+      height: 24px;
       font-size: 14px;
+      font-weight: 400;
+      padding: 8px 0px;
+    }
+
+    &:hover {
+      background-color: #535353;
+      cursor: pointer;
+      transition: all 0.2s ease;
     }
   }
 }
