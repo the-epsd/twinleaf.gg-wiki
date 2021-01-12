@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import Loader from './components/Loader.vue';
+import Loader from "./components/Loader.vue";
 
 export default {
   components: {
@@ -115,6 +115,27 @@ body {
   .content {
     width: calc(100% - 250px);
     height: 100vh;
+    overflow-y: auto;
+
+    &::-webkit-scrollbar {
+      width: 5px;
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-track {
+      background: unset;
+    }
+
+    &::-webkit-scrollbar-thumb {
+      background: #282828;
+      border-radius: 5px;
+    }
+
+    &::-webkit-scrollbar-thumb:hover {
+      background: #2e2e2e;
+      border-radius: 5px;
+      cursor: pointer;
+    }
   }
 }
 
