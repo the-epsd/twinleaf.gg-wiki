@@ -2,9 +2,10 @@
   <div v-if="loaded">
     <div class="header">
       <h1>{{ set.name }}</h1>
+      <input type="text" v-model="filterWord">
     </div>
     <div class="cards-container">
-      <div class="card" v-for="card in cards" :key="card.id">
+      <div class="card" v-for="card in filteredList" :key="card.id">
         <img :src="card.imageUrlHiRes" />
       </div>
     </div>
@@ -26,6 +27,7 @@ export default {
       set: [],
       cards: [],
       loaded: false,
+      filterWord: "",
     };
   },
   created() {
@@ -58,6 +60,13 @@ export default {
             console.log(this.cards);
           })
         );
+    },
+  },
+  computed: {
+    filteredList() {
+      return this.cards.filter(card => {
+        return card.name.toLowerCase().includes(this.filterWord.toLowerCase())
+      })
     },
   },
 };

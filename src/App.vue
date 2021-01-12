@@ -51,7 +51,6 @@ export default {
       .then((response) => {
         this.loaded = true;
         this.response = response.data.sets.reverse();
-        console.log(this.response);
       })
       .catch(function (error) {
         // handle error
