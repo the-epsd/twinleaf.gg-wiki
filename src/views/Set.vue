@@ -1,12 +1,38 @@
 <template>
   <div v-if="loaded">
     <div class="header">
-      <h1>{{ set.name }}</h1>
-      <input type="text" v-model="filterWord">
+      <div>
+        <h3>Release date: {{ set.releaseDate }}</h3>
+        <h1>{{ set.name }}</h1>
+      </div>
+      <div class="search-container">
+        <div class="search">
+          <input
+            class="input"
+            type="text"
+            placeholder="Search"
+            v-model="filterWord"
+          />
+          <svg
+            class="icon"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
+            <g data-name="Layer 2">
+              <g data-name="search">
+                <rect width="24" height="24" opacity="0" />
+                <path
+                  d="M20.71 19.29l-3.4-3.39A7.92 7.92 0 0 0 19 11a8 8 0 1 0-8 8 7.92 7.92 0 0 0 4.9-1.69l3.39 3.4a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42zM5 11a6 6 0 1 1 6 6 6 6 0 0 1-6-6z"
+                />
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
     </div>
     <div class="cards-container">
       <div class="card" v-for="card in filteredList" :key="card.id">
-        <img :src="card.imageUrlHiRes" />
+        <img :src="card.imageUrl" />
       </div>
     </div>
   </div>
@@ -58,15 +84,16 @@ export default {
             this.set = data1.data.set;
             this.cards = data2.data.cards;
             console.log(this.cards);
+            console.log(this.set);
           })
         );
     },
   },
   computed: {
     filteredList() {
-      return this.cards.filter(card => {
-        return card.name.toLowerCase().includes(this.filterWord.toLowerCase())
-      })
+      return this.cards.filter((card) => {
+        return card.name.toLowerCase().includes(this.filterWord.toLowerCase());
+      });
     },
   },
 };
@@ -83,6 +110,57 @@ export default {
 .header {
   padding: 10px;
   padding-bottom: 20px;
+  display: flex;
+  justify-content: space-between;
+
+  h1 {
+    font-weight: 500;
+    font-size: 32px;
+    line-height: 32px;
+  }
+
+  h3 {
+    font-weight: 700;
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+  .search-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .search {
+    display: flex;
+    flex-wrap: wrap;
+    height: 20px;
+    border-bottom: 1px solid #bbbbbb;
+
+    .icon {
+      fill: #bbbbbb;
+      width: 20px;
+      height: 20px;
+    }
+
+    .input {
+      background: none;
+      border: none;
+      color: #eeeeee;
+      padding-left: 3px;
+      width: 150px;
+
+      &::placeholder {
+        color: #bbbbbb;
+        padding-left: 3px;
+        font-weight: 400;
+      }
+
+      &:focus {
+        outline: none;
+      }
+    }
+  }
 }
 
 .cards-container {
