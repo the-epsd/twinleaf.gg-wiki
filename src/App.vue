@@ -1,27 +1,7 @@
 <template>
   <div id="app">
     <div v-if="setsLength > 0" class="app-body">
-      <div id="nav" class="nav">
-        <router-link to="/">
-          <h1>TCG-wiki</h1>
-        </router-link>
-        <div class="pk-sets" v-if="setsLength > 0">
-          <router-link
-            v-for="set in sets"
-            :key="set.code"
-            :to="`/${set.code}`"
-            :class="{ active: set.code === $route.params.id }"
-            class="pk-set"
-          >
-            <div class="img">
-              <img :src="`${set.symbolUrl}`" :alt="`${set.name}`" />
-            </div>
-            <span>
-              {{ set.name }}
-            </span>
-          </router-link>
-        </div>
-      </div>
+      <sidebar></sidebar>
       <div class="content">
         <router-view />
       </div>
@@ -33,11 +13,14 @@
 </template>
 
 <script>
-import Loader from "./components/Loader.vue";
+import Sidebar from "./components/Sidebar";
+
+import Loader from "./components/Loader";
 
 export default {
   components: {
-    Loader,
+    Sidebar,
+    Loader
   },
   data() {
     return {
@@ -47,9 +30,6 @@ export default {
     this.$store.dispatch("getSets");
   },
   computed: {
-    sets () {
-      return this.$store.state.sets;
-    },
     setsLength () {
       return this.$store.getters.setsLength;
     }
@@ -70,6 +50,26 @@ export default {
 
   a {
     color: #eeeeee;
+  }
+
+  &::-webkit-scrollbar {
+    width: 5px;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-track {
+    background: unset;
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background: #282828;
+    border-radius: 5px;
+  }
+
+  &::-webkit-scrollbar-thumb:hover {
+    background: #2e2e2e;
+    border-radius: 5px;
+    cursor: pointer;
   }
 }
 
@@ -95,69 +95,16 @@ body {
 .app-body {
   display: flex;
 
-  .nav {
-    width: 250px;
-    height: 100vh;
-    background: #181818;
-    padding: 10px;
-
-    h1 {
-      font-size: 22px;
-      font-weight: 500;
-      height: 40px;
-    }
-  }
-
   .content {
     width: calc(100% - 250px);
     height: 100vh;
     overflow-y: auto;
-
-    &::-webkit-scrollbar {
-      width: 5px;
-      border-radius: 5px;
-    }
-
-    &::-webkit-scrollbar-track {
-      background: unset;
-    }
-
-    &::-webkit-scrollbar-thumb {
-      background: #282828;
-      border-radius: 5px;
-    }
-
-    &::-webkit-scrollbar-thumb:hover {
-      background: #2e2e2e;
-      border-radius: 5px;
-      cursor: pointer;
-    }
   }
 }
 
 .pk-sets {
   overflow-y: auto;
   height: calc(100vh - 60px);
-
-  &::-webkit-scrollbar {
-    width: 5px;
-    border-radius: 5px;
-  }
-
-  &::-webkit-scrollbar-track {
-    background: unset;
-  }
-
-  &::-webkit-scrollbar-thumb {
-    background: #282828;
-    border-radius: 5px;
-  }
-
-  &::-webkit-scrollbar-thumb:hover {
-    background: #2e2e2e;
-    border-radius: 5px;
-    cursor: pointer;
-  }
 
   .pk-set {
     display: flex;
