@@ -11,7 +11,7 @@ const routes = [
     component: Home
   },
   {
-    path: '/set/:id',
+    path: '/:id',
     name: 'Set',
     component: () => import(/* webpackChunkName: "about" */ '../views/Set.vue')
   }

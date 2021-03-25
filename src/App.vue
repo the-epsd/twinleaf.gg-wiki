@@ -1,15 +1,15 @@
 <template>
   <div id="app">
-    <div v-if="loaded" class="app-body">
+    <div v-if="setsLength > 0" class="app-body">
       <div id="nav" class="nav">
         <router-link to="/">
           <h1>TCG-wiki</h1>
         </router-link>
-        <div class="pk-sets" v-if="loaded">
+        <div class="pk-sets" v-if="setsLength > 0">
           <router-link
-            v-for="set in response"
+            v-for="set in sets"
             :key="set.code"
-            :to="`/set/${set.code}`"
+            :to="`/${set.code}`"
             :class="{ active: set.code === $route.params.id }"
             class="pk-set"
           >
@@ -41,22 +41,19 @@ export default {
   },
   data() {
     return {
-      response: [],
-      loaded: false,
     };
   },
-  mounted() {
-    this.$http
-      .get("https://api.pokemontcg.io/v1/sets")
-      .then((response) => {
-        this.loaded = true;
-        this.response = response.data.sets.reverse();
-      })
-      .catch(function (error) {
-        // handle error
-        console.log(error);
-      });
+  created() { 
+    this.$store.dispatch("getSets");
   },
+  computed: {
+    sets () {
+      return this.$store.state.sets;
+    },
+    setsLength () {
+      return this.$store.getters.setsLength;
+    }
+  }
 };
 </script>
 
