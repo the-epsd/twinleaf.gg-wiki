@@ -19,12 +19,20 @@
         </span>
       </router-link>
     </div>
+    <div v-else class="center">
+      <loader></loader>
+    </div>
   </div>
 </template>
 
 <script>
+import Loader from "./Loader";
+
 export default {
   name: "Sidebar",
+  components: {
+    Loader,
+  },
   computed: {
     sets() {
       return this.$store.state.sets;
@@ -48,5 +56,52 @@ export default {
     font-weight: 500;
     height: 40px;
   }
+}
+
+.pk-sets {
+  overflow-y: auto;
+  height: calc(100vh - 60px);
+
+  .pk-set {
+    display: flex;
+    justify-content: flex-start;
+    transition: all 0.2s ease;
+    border-radius: 3px;
+    // border-bottom: 1px solid #535353;
+    // border-top: 1px solid #535353;
+
+    .img {
+      position: relative;
+      height: 30px;
+      width: 30px;
+      // background-color:#535353;
+      padding: 5px;
+      padding-right: 10px;
+      img {
+        display: block;
+        height: 30px;
+        width: auto;
+        max-width: 30px;
+        margin: 0 auto;
+      }
+    }
+
+    span {
+      height: 24px;
+      font-size: 14px;
+      font-weight: 400;
+      padding: 8px 0px;
+    }
+
+    &:hover {
+      background-color: #535353;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+  }
+}
+
+.active {
+  background-color: #535353;
 }
 </style>
