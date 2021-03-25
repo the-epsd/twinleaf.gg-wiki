@@ -7,7 +7,7 @@
       <router-link
         v-for="set in sets"
         :key="set.code"
-        :to="`/${set.code}`"
+        :to="{ name: 'Set', params: { id: set.code } }"
         :class="{ active: set.code === $route.params.id }"
         class="pk-set"
       >
