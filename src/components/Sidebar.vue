@@ -49,7 +49,8 @@ export default {
 
 <style lang="scss">
 .nav {
-  width: 250px;
+  transition: all 0.2s ease;
+  width: 290px;
   height: 100vh;
   background: var(--blue-600);
   padding: 10px;
@@ -124,6 +125,26 @@ export default {
     background-color: var(--primary) !important;
     cursor: pointer;
     transition: all 0.2s ease;
+  }
+}
+
+.closed {
+  transition: all 0.2s ease;
+  width: 60px;
+  .logo {
+    h1 {
+      visibility: hidden;
+      opacity: 0;
+    }
+  }
+
+  .pk-sets {
+    .pk-set {
+      span {
+        visibility: hidden;
+        opacity: 0;
+      }
+    }
   }
 }
 </style>

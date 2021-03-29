@@ -105,7 +105,7 @@ body {
   display: flex;
 
   .content {
-    width: calc(100% - 250px);
+    width: 100%;
     height: 100vh;
     overflow-y: auto;
   }
