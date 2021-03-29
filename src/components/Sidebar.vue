@@ -1,9 +1,9 @@
 <template>
   <div id="nav" class="nav">
     <router-link to="/">
-      <h1>TCG-wiki</h1>
+      <h1>TCG Wiki</h1>
     </router-link>
-    <div class="pk-sets" v-if="setsLength > 0">
+    <div class="pk-sets" v-if="setsReady">
       <router-link
         v-for="set in sets"
         :key="set.code"
@@ -37,8 +37,8 @@ export default {
     sets() {
       return this.$store.state.sets;
     },
-    setsLength() {
-      return this.$store.getters.setsLength;
+    setsReady() {
+      return this.$store.state.setsReady;
     },
   },
 };
@@ -48,12 +48,12 @@ export default {
 .nav {
   width: 250px;
   height: 100vh;
-  background: #181818;
+  background: var(--blue-600);
   padding: 10px;
 
   h1 {
     font-size: 22px;
-    font-weight: 500;
+    font-weight: 700;
     height: 40px;
   }
 }
@@ -66,7 +66,9 @@ export default {
     display: flex;
     justify-content: flex-start;
     transition: all 0.2s ease;
-    border-radius: 3px;
+    border-radius: 25px;
+    margin-bottom: 5px;
+    margin-right: 5px;
     // border-bottom: 1px solid #535353;
     // border-top: 1px solid #535353;
 
@@ -75,7 +77,7 @@ export default {
       height: 30px;
       width: 30px;
       // background-color:#535353;
-      padding: 5px;
+      padding: 5px 10px;
       padding-right: 10px;
       img {
         display: block;
@@ -94,7 +96,7 @@ export default {
     }
 
     &:hover {
-      background-color: #535353;
+      background-color: var(--blue-500);
       cursor: pointer;
       transition: all 0.2s ease;
     }
@@ -102,6 +104,11 @@ export default {
 }
 
 .active {
-  background-color: #535353;
+  background-color: var(--primary);
+  &:hover {
+    background-color: var(--primary) !important;
+    cursor: pointer;
+    transition: all 0.2s ease;
+  }
 }
 </style>

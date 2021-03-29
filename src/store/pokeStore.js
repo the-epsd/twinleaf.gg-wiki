@@ -7,17 +7,19 @@ Vue.use(Vuex);
 export const pokeStore = new Vuex.Store({
     state: {
         sets: [],
+        setsReady: false,
     },
     getters: {
-        setsLength: state => {
-            let setCount = state.sets.length;
-            console.log(setCount);
-            return setCount;
-        }
+        // setsLength: state => {
+        //     let setCount = state.sets.length;
+        //     console.log(setCount);
+        //     return setCount;
+        // }
     },
     mutations: {
         setSets: (state, data) => {
             state.sets = data;
+            state.setsReady = true;
             console.log(state.sets);
         }
     },

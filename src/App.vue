@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div v-if="setsLength > 0" class="app-body">
+    <div v-if="setsReady" class="app-body">
       <sidebar></sidebar>
       <div class="content">
         <router-view />
@@ -30,8 +30,8 @@ export default {
     this.$store.dispatch("getSets");
   },
   computed: {
-    setsLength () {
-      return this.$store.getters.setsLength;
+    setsReady () {
+      return this.$store.state.setsReady;
     }
   }
 };
@@ -39,6 +39,19 @@ export default {
 
 <style lang="scss">
 @import url("https://use.typekit.net/eqp3quc.css");
+
+:root {
+  --app-height: 100%;
+
+  --blue-700: #0d0e1b;
+  --blue-600: #121327;
+  --blue-500: #1e2041;
+  --blue-400: #23254d;
+
+  --primary: #3d5afe;
+
+  --font: #f4f4f4;
+}
 
 * {
   white-space: -moz-pre-wrap;
@@ -62,19 +75,15 @@ export default {
   }
 
   &::-webkit-scrollbar-thumb {
-    background: #282828;
+    background: var(--blue-500);
     border-radius: 5px;
   }
 
   &::-webkit-scrollbar-thumb:hover {
-    background: #2e2e2e;
+    background: var(--blue-400);
     border-radius: 5px;
     cursor: pointer;
   }
-}
-
-:root {
-  --app-height: 100%;
 }
 
 html,
@@ -84,8 +93,8 @@ body {
   overflow: hidden;
   width: 100vw;
   height: 100vh;
-  background: #121212;
-  color: #eeeeee;
+  background: var(--blue-700);
+  color: var(--font);
 
   @media not all and (hover: hover) {
     height: var(--app-height);

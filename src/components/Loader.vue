@@ -31,7 +31,7 @@ export default {
   stroke-dashoffset: 0;
   animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
   stroke-linecap: square;
-  stroke:#ee1515;
+  stroke: var(--primary);
 }
 
 @keyframes rotate {
