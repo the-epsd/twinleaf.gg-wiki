@@ -1,10 +1,31 @@
 <template>
-  <div id="nav" class="nav">
+  <div id="nav" class="nav" :class="{ 'closed' : menuSmall === true }">
     <div class="nav-top">
       <router-link to="/" class="logo">
         <img alt="Vue logo" src="../assets/Logo.svg" />
         <h1>TCG Wiki</h1>
       </router-link>
+      <div @click="changeMenu()" class="min-nav-btn">
+        <svg
+          class="icon"
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+        >
+          <g data-name="Layer 2">
+            <g data-name="arrow-ios-forward">
+              <rect
+                width="24"
+                height="24"
+                transform="rotate(-90 12 12)"
+                opacity="0"
+              />
+              <path
+                d="M10 19a1 1 0 0 1-.64-.23 1 1 0 0 1-.13-1.41L13.71 12 9.39 6.63a1 1 0 0 1 .15-1.41 1 1 0 0 1 1.46.15l4.83 6a1 1 0 0 1 0 1.27l-5 6A1 1 0 0 1 10 19z"
+              />
+            </g>
+          </g>
+        </svg>
+      </div>
     </div>
     <div class="pk-sets" v-if="setsReady">
       <router-link
@@ -36,12 +57,31 @@ export default {
   components: {
     Loader,
   },
+  data() {
+    return {
+      menuSmall: false,
+    };
+  },
   computed: {
     sets() {
       return this.$store.state.sets;
     },
     setsReady() {
       return this.$store.state.setsReady;
+    },
+  },
+  created() {
+      let ls = JSON.parse(localStorage.getItem('menuSmall'));
+      if(ls == null) {
+        localStorage.setItem('menuSmall', JSON.stringify(false))
+      } else {
+        this.menuSmall = ls
+      }
+  },
+  methods: {
+    changeMenu() {
+      this.menuSmall = !this.menuSmall;      
+      localStorage.setItem('menuSmall', JSON.stringify(this.menuSmall))
     },
   },
 };
@@ -55,21 +95,58 @@ export default {
   background: var(--blue-600);
   padding: 10px;
 
-  .logo {
-    display: flex;
-    justify-content: flex-start;
-    height: 30px;
-    padding: 5px 0 15px 0;
+  &:hover {
+    .nav-top {
+      .min-nav-btn {
+        transition: all 0.2s ease;
+        visibility: visible;
+        opacity: 1;
+      }
+    }
+  }
 
-    img {
-      width: auto;
+  .nav-top {
+    position: relative;
+    .logo {
+      display: flex;
+      justify-content: flex-start;
       height: 30px;
-      padding: 0 7px 0 10px;
+      padding: 5px 0 15px 0;
+
+      img {
+        width: auto;
+        height: 30px;
+        padding: 0 7px 0 10px;
+      }
+
+      h1 {
+        font-size: 22px;
+        font-weight: 700;
+      }
     }
 
-    h1 {
-      font-size: 22px;
-      font-weight: 700;
+    .min-nav-btn {
+      transition: all 0.2s ease;
+      cursor: pointer;
+      visibility: hidden;
+      opacity: 0;
+      position: absolute;
+      top: 5px;
+      right: -20px;
+      display: inline-block;
+      width: 22px;
+      height: 22px;
+      padding: 2px;
+      border-radius: 50%;
+      background: var(--primary);
+
+      .icon {
+        transition: all 0.2s ease;
+        transform: rotate(0deg);
+        width: auto;
+        height: 22px;
+        fill: var(--font);
+      }
     }
   }
 }
@@ -131,18 +208,24 @@ export default {
 .closed {
   transition: all 0.2s ease;
   width: 60px;
-  .logo {
-    h1 {
-      visibility: hidden;
-      opacity: 0;
+  .nav-top {
+    .logo {
+      h1 {
+        display: none;
+      }
+    }
+    .min-nav-btn {
+      .icon {
+        transition: all 0.2s ease;
+        transform: rotate(-180deg);
+      }
     }
   }
 
   .pk-sets {
     .pk-set {
       span {
-        visibility: hidden;
-        opacity: 0;
+        display: none;
       }
     }
   }
