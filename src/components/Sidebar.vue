@@ -1,8 +1,11 @@
 <template>
   <div id="nav" class="nav">
-    <router-link to="/">
-      <h1>TCG Wiki</h1>
-    </router-link>
+    <div class="nav-top">
+      <router-link to="/" class="logo">
+        <img alt="Vue logo" src="../assets/Logo.svg" />
+        <h1>TCG Wiki</h1>
+      </router-link>
+    </div>
     <div class="pk-sets" v-if="setsReady">
       <router-link
         v-for="set in sets"
@@ -51,10 +54,22 @@ export default {
   background: var(--blue-600);
   padding: 10px;
 
-  h1 {
-    font-size: 22px;
-    font-weight: 700;
-    height: 40px;
+  .logo {
+    display: flex;
+    justify-content: flex-start;
+    height: 30px;
+    padding: 5px 0 15px 0;
+
+    img {
+      width: auto;
+      height: 30px;
+      padding: 0 7px 0 10px;
+    }
+
+    h1 {
+      font-size: 22px;
+      font-weight: 700;
+    }
   }
 }
 
