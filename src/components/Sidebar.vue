@@ -1,5 +1,5 @@
 <template>
-  <div id="nav" class="nav" :class="{ 'closed' : menuSmall === true }">
+  <div id="nav" class="nav" :class="{ closed: menuSmall === true }">
     <div class="nav-top">
       <router-link to="/" class="logo">
         <img alt="Vue logo" src="../assets/Logo.svg" />
@@ -36,7 +36,7 @@
         class="pk-set"
       >
         <div class="img">
-          <img :src="`${set.symbolUrl}`" :alt="`${set.name}`" />
+          <img :src="`${set.symbolUrl}`" loading="lazy" :alt="`${set.name}`" />
         </div>
         <span>
           {{ set.name }}
@@ -71,29 +71,33 @@ export default {
     },
   },
   created() {
-      let ls = JSON.parse(localStorage.getItem('menuSmall'));
-      if(ls == null) {
-        localStorage.setItem('menuSmall', JSON.stringify(false))
-      } else {
-        this.menuSmall = ls
-      }
+    let ls = JSON.parse(localStorage.getItem("menuSmall"));
+    if (ls == null) {
+      localStorage.setItem("menuSmall", JSON.stringify(false));
+    } else {
+      this.menuSmall = ls;
+    }
   },
   methods: {
     changeMenu() {
-      this.menuSmall = !this.menuSmall;      
-      localStorage.setItem('menuSmall', JSON.stringify(this.menuSmall))
+      this.menuSmall = !this.menuSmall;
+      localStorage.setItem("menuSmall", JSON.stringify(this.menuSmall));
     },
   },
 };
 </script>
 
 <style lang="scss">
+@import "../style/responsive.scss";
+
 .nav {
   transition: all 0.2s ease;
-  width: 290px;
-  height: 100vh;
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: 80vh;
   background: var(--blue-600);
-  padding: 10px;
+  border-radius: 25px 25px 0px 0px;
 
   &:hover {
     .nav-top {
@@ -107,8 +111,10 @@ export default {
 
   .nav-top {
     position: relative;
+    min-height: 20px;
+
     .logo {
-      display: flex;
+      display: none;
       justify-content: flex-start;
       height: 30px;
       padding: 5px 0 15px 0;
@@ -128,9 +134,7 @@ export default {
     .min-nav-btn {
       transition: all 0.2s ease;
       cursor: pointer;
-      visibility: hidden;
-      opacity: 0;
-      position: absolute;
+      position: relative;
       top: 5px;
       right: -20px;
       display: inline-block;
@@ -138,11 +142,11 @@ export default {
       height: 22px;
       padding: 2px;
       border-radius: 50%;
-      background: var(--primary);
+      background: var(--blue--600);
 
       .icon {
         transition: all 0.2s ease;
-        transform: rotate(0deg);
+        transform: rotate(90deg);
         width: auto;
         height: 22px;
         fill: var(--font);
@@ -160,8 +164,10 @@ export default {
     justify-content: flex-start;
     transition: all 0.2s ease;
     border-radius: 25px;
-    margin-bottom: 5px;
     margin-right: 5px;
+    margin-bottom: 5px;
+    width: 250px;
+    margin: 5px auto;
     // border-bottom: 1px solid #535353;
     // border-top: 1px solid #535353;
 
@@ -199,7 +205,7 @@ export default {
 .active {
   background-color: var(--primary);
   &:hover {
-    background-color: var(--primary) !important;
+    background-color: var(--primary);
     cursor: pointer;
     transition: all 0.2s ease;
   }
@@ -207,7 +213,9 @@ export default {
 
 .closed {
   transition: all 0.2s ease;
-  width: 60px;
+  width: 100%;
+  height: 80px;
+
   .nav-top {
     .logo {
       h1 {
@@ -217,15 +225,90 @@ export default {
     .min-nav-btn {
       .icon {
         transition: all 0.2s ease;
-        transform: rotate(-180deg);
+        transform: rotate(-90deg);
       }
     }
   }
 
   .pk-sets {
     .pk-set {
+      display: none;
       span {
-        display: none;
+        display: flex;
+      }
+    }
+    .active {
+      display: flex;
+    }
+  }
+}
+
+//responsive
+.nav {
+  @include respond-to("tablet") {
+    transition: all 0.2s ease;
+    position: relative;
+    width: 290px;
+    height: 100vh;
+    padding: 10px;
+
+    .nav-top {
+      .logo {
+        display: flex;
+      }
+
+      .min-nav-btn {
+        transition: all 0.2s ease;
+        cursor: pointer;
+        visibility: hidden;
+        opacity: 0;
+        position: absolute;
+        top: 5px;
+        right: -20px;
+        display: inline-block;
+        width: 22px;
+        height: 22px;
+        padding: 2px;
+        border-radius: 50%;
+        background: var(--primary);
+
+        .icon {
+          transition: all 0.2s ease;
+          transform: rotate(-180deg);
+          width: auto;
+          height: 22px;
+          fill: var(--font);
+        }
+      }
+    }
+
+    .pk-sets {
+      .pk-set {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.closed {
+  @include respond-to("tablet") {
+    transition: all 0.2s ease;
+    width: 60px;
+    height: unset;
+    .nav-top {
+       .min-nav-btn {
+      .icon {
+        transition: all 0.2s ease;
+        transform: rotate(0deg);
+      }
+    }
+    }
+    .pk-sets {
+      .pk-set {
+        display: block;
+        span {
+          display: none;
+        }
       }
     }
   }

@@ -20,25 +20,25 @@ import Loader from "./components/Loader";
 export default {
   components: {
     Sidebar,
-    Loader
+    Loader,
   },
   data() {
-    return {
-    };
+    return {};
   },
-  created() { 
+  created() {
     this.$store.dispatch("getSets");
   },
   computed: {
-    setsReady () {
+    setsReady() {
       return this.$store.state.setsReady;
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style lang="scss">
 @import url("https://use.typekit.net/eqp3quc.css");
+@import "./style/responsive.scss";
 
 :root {
   --app-height: 100%;
@@ -103,6 +103,7 @@ body {
 
 .app-body {
   display: flex;
+  flex-direction: column-reverse;
 
   .content {
     width: 100%;
@@ -116,5 +117,13 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
+}
+
+//responsive
+.app-body {
+  @include respond-to("tablet") {
+    display: flex;
+    flex-direction: row;
+  }
 }
 </style>
