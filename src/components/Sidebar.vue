@@ -249,8 +249,10 @@ export default {
     transition: all 0.2s ease;
     position: relative;
     width: 290px;
-    height: 100vh;
+    height: 95vh;
     padding: 10px;
+    margin: 10px;
+    border-radius: 25px 25px 25px 25px;
 
     .nav-top {
       .logo {
@@ -283,6 +285,7 @@ export default {
     }
 
     .pk-sets {
+      height: calc(96vh - 60px);
       .pk-set {
         width: 100%;
       }
