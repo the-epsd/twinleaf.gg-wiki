@@ -28,6 +28,9 @@
       </div>
     </div>
     <div class="pk-sets" v-if="setsReady">
+      <div @click="changeMenu()" class="pk-set active no-set" v-if="$route.params.id == undefined">
+        <span>Select a set</span>
+      </div>
       <router-link
         v-for="set in sets"
         :key="set.code"
@@ -111,8 +114,7 @@ export default {
 
   .nav-top {
     position: relative;
-    min-height: 20px;
-
+    height: 25px;
     .logo {
       display: none;
       justify-content: flex-start;
@@ -135,20 +137,20 @@ export default {
       transition: all 0.2s ease;
       cursor: pointer;
       position: relative;
-      top: 5px;
-      right: -20px;
-      display: inline-block;
-      width: 22px;
-      height: 22px;
+      top: -14px;
+      display: block;
+      width: 30px;
+      height: 30px;
       padding: 2px;
       border-radius: 50%;
-      background: var(--blue--600);
+      margin: 0 auto;
+      background: var(--blue-600);
 
       .icon {
         transition: all 0.2s ease;
         transform: rotate(90deg);
         width: auto;
-        height: 22px;
+        height: 30px;
         fill: var(--font);
       }
     }
@@ -157,7 +159,7 @@ export default {
 
 .pk-sets {
   overflow-y: auto;
-  height: calc(100vh - 60px);
+  height: calc(80vh - 30px);
 
   .pk-set {
     display: flex;
@@ -167,7 +169,7 @@ export default {
     margin-right: 5px;
     margin-bottom: 5px;
     width: 250px;
-    margin: 5px auto;
+    margin: 0px auto;
     // border-bottom: 1px solid #535353;
     // border-top: 1px solid #535353;
 
@@ -195,19 +197,22 @@ export default {
     }
 
     &:hover {
-      background-color: var(--blue-500);
+      background-color: var(--primary);
       cursor: pointer;
       transition: all 0.2s ease;
     }
   }
-}
 
-.active {
-  background-color: var(--primary);
-  &:hover {
-    background-color: var(--primary);
-    cursor: pointer;
-    transition: all 0.2s ease;
+  .no-set {
+    span {
+      margin: 0 auto;
+    }
+
+    &:hover {
+      background-color: var(--primary);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
   }
 }
 
@@ -286,8 +291,22 @@ export default {
 
     .pk-sets {
       height: calc(96vh - 60px);
+      
+      .no-set {
+        display: none;
+      }
+
       .pk-set {
         width: 100%;
+        
+        &:hover {
+          background-color: var(--blue-500);
+        }
+      }
+      .active {
+        &:hover {
+          background-color: var(--primary);
+        }        
       }
     }
   }
@@ -314,6 +333,15 @@ export default {
         }
       }
     }
+  }
+}
+
+.active {
+  background-color: var(--primary);
+  &:hover {
+    background-color: var(--primary);
+    cursor: pointer;
+    transition: all 0.2s ease;
   }
 }
 </style>
