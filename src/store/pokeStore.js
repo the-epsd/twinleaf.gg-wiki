@@ -15,13 +15,16 @@ export const pokeStore = new Vuex.Store({
         //     console.log(setCount);
         //     return setCount;
         // }
+        setIndex: (state, data) => {
+            let setData = state.sets.findIndex(set => set.id === data)
+            return setData;
+        }
     },
     mutations: {
         setSets: (state, data) => {
             state.sets = data;
             state.setsReady = true;
-            console.log(state.sets);
-        }
+        },
     },
     actions: {
         getSets: ({ commit }) => {
@@ -31,6 +34,6 @@ export const pokeStore = new Vuex.Store({
                 // handle error
                 console.log(error);
             });
-        }
+        },
     }
 });

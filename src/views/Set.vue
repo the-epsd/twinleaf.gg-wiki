@@ -65,28 +65,29 @@ export default {
   methods: {
     fetchData() {
       this.loaded = false;
+      console.log(this.currentCards);
 
-      this.$http
-        .all([
-          this.$http.get(
-            "https://api.pokemontcg.io/v1/sets/" + this.$route.params.id
-          ),
-          this.$http.get(
-            "https://api.pokemontcg.io/v1/cards?setCode=" +
-              this.$route.params.id +
-              "&pageSize=1000"
-          ),
-        ])
-        .then(
-          this.$http.spread((data1, data2) => {
-            // output of req.
-            this.loaded = true;
-            this.set = data1.data.set;
-            this.cards = data2.data.cards;
-            console.log(this.cards);
-            console.log(this.set);
-          })
-        );
+      // this.$http
+      //   .all([
+      //     this.$http.get(
+      //       "https://api.pokemontcg.io/v1/sets/" + this.$route.params.id
+      //     ),
+      //     this.$http.get(
+      //       "https://api.pokemontcg.io/v1/cards?setCode=" +
+      //         this.$route.params.id +
+      //         "&pageSize=1000"
+      //     ),
+      //   ])
+      //   .then(
+      //     this.$http.spread((data1, data2) => {
+      //       // output of req.
+      //       this.loaded = true;
+      //       this.set = data1.data.set;
+      //       this.cards = data2.data.cards;
+      //       console.log(this.cards);
+      //       console.log(this.set);
+      //     })
+      //   );
     },
   },
   computed: {
@@ -94,6 +95,9 @@ export default {
       return this.cards.filter((card) => {
         return card.name.toLowerCase().includes(this.filterWord.toLowerCase());
       });
+    },
+    currentCards() {
+      return this.$store.getters.setIndex(this.$route.params.id);
     },
   },
 };

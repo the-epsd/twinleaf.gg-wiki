@@ -37,6 +37,7 @@
         :to="{ name: 'Set', params: { id: set.code } }"
         :class="{ active: set.code === $route.params.id }"
         class="pk-set"
+        @click.native="closeMobMenu()"
       >
         <div class="img">
           <img :src="`${set.symbolUrl}`" loading="lazy" :alt="`${set.name}`" />
@@ -63,6 +64,7 @@ export default {
   data() {
     return {
       menuSmall: false,
+      ww: '',
     };
   },
   computed: {
@@ -74,6 +76,10 @@ export default {
     },
   },
   created() {
+    window.addEventListener('resize', () => {
+      this.ww = window.innerWidth;
+    })
+
     let ls = JSON.parse(localStorage.getItem("menuSmall"));
     if (ls == null) {
       localStorage.setItem("menuSmall", JSON.stringify(false));
@@ -86,6 +92,11 @@ export default {
       this.menuSmall = !this.menuSmall;
       localStorage.setItem("menuSmall", JSON.stringify(this.menuSmall));
     },
+    closeMobMenu() {
+      if(this.ww < 750) {
+        this.changeMenu();
+      }
+    },
   },
 };
 </script>
@@ -94,6 +105,7 @@ export default {
 @import "../style/responsive.scss";
 
 .nav {
+  z-index: 20;
   transition: all 0.2s ease;
   position: fixed;
   bottom: 0;
