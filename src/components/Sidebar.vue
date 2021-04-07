@@ -260,6 +260,7 @@ export default {
     border-radius: 25px 25px 25px 25px;
 
     .nav-top {
+      height: 60px;
       .logo {
         display: flex;
       }
