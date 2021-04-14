@@ -64,7 +64,7 @@ export default {
   data() {
     return {
       menuSmall: false,
-      ww: '',
+      ww: 750,
     };
   },
   computed: {
@@ -76,6 +76,7 @@ export default {
     },
   },
   created() {
+    this.ww = window.innerWidth;
     window.addEventListener('resize', () => {
       this.ww = window.innerWidth;
     })
