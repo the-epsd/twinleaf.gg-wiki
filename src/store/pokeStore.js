@@ -8,6 +8,7 @@ export const pokeStore = new Vuex.Store({
     state: {
         sets: [],
         setsReady: false,
+        cardsReady: false,
     },
     getters: {
         // setsLength: state => {
@@ -15,14 +16,15 @@ export const pokeStore = new Vuex.Store({
         //     console.log(setCount);
         //     return setCount;
         // }
-        setIndex: (state, data) => {
-            let setData = state.sets.findIndex(set => set.id === data)
-            return setData;
+        setIndex: (state) => (data) => {
+            let setData = state.sets.findIndex(set => set.code === data)
+            return state.sets[setData];
         }
     },
     mutations: {
         setSets: (state, data) => {
             state.sets = data;
+            console.log(data);
             state.setsReady = true;
         },
     },

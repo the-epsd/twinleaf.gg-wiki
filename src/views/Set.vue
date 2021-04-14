@@ -1,9 +1,9 @@
 <template>
-  <div v-if="loaded">
+  <div v-if="cardsReady">
     <div class="header">
       <div>
-        <h3>Release date: {{ set.releaseDate }}</h3>
-        <h1>{{ set.name }}</h1>
+        <h3>Release date: {{ currentCards.releaseDate }}</h3>
+        <h1>{{ currentCards.name }}</h1>
       </div>
       <div class="search-container">
         <div class="search">
@@ -65,7 +65,7 @@ export default {
   methods: {
     fetchData() {
       this.loaded = false;
-      console.log(this.currentCards);
+      console.log(this.cardsReady);
 
       // this.$http
       //   .all([
@@ -98,6 +98,9 @@ export default {
     },
     currentCards() {
       return this.$store.getters.setIndex(this.$route.params.id);
+    },
+    cardsReady() {
+      return this.$store.state.cardsReady;
     },
   },
 };
