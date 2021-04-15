@@ -8,7 +8,7 @@ export const pokeStore = new Vuex.Store({
     state: {
         sets: [],
         setsReady: false,
-        cardsReady: false,
+        cardsReady: true,
     },
     getters: {
         // setsLength: state => {
@@ -27,11 +27,22 @@ export const pokeStore = new Vuex.Store({
             console.log(data);
             state.setsReady = true;
         },
+        toggleCardsReady: (state) => {
+            state.cardsReady = !state.cardsReady
+        }
     },
     actions: {
         getSets: ({ commit }) => {
             axios.get("https://api.pokemontcg.io/v1/sets").then(response => {
                 commit("setSets", response.data.sets.reverse());
+            }).catch(function (error) {
+                // handle error
+                console.log(error);
+            });
+        },
+        getCards: ({ commit }, { setID }) => {
+            axios.get("https://api.pokemontcg.io/v1/cards?setCode=" + setID + "&pageSize=1000").then(response => {
+                commit("setCards", [setID, response.data.cards]);
             }).catch(function (error) {
                 // handle error
                 console.log(error);

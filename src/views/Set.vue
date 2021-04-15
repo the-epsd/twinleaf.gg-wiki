@@ -65,7 +65,10 @@ export default {
   methods: {
     fetchData() {
       this.loaded = false;
-      console.log(this.cardsReady);
+      console.log(this.cardsReady.cards);
+      if(this.cardsReady.cards == undefined) {
+        this.$store.dispatch("getCards", {setID: this.$route.params.id});
+      }
 
       // this.$http
       //   .all([
