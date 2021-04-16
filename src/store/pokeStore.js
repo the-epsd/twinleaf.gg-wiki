@@ -8,14 +8,9 @@ export const pokeStore = new Vuex.Store({
     state: {
         sets: [],
         setsReady: false,
-        cardsReady: true,
+        cardsReady: false,
     },
     getters: {
-        // setsLength: state => {
-        //     let setCount = state.sets.length;
-        //     console.log(setCount);
-        //     return setCount;
-        // }
         setIndex: (state) => (data) => {
             let setData = state.sets.findIndex(set => set.code === data)
             return state.sets[setData];
@@ -24,8 +19,12 @@ export const pokeStore = new Vuex.Store({
     mutations: {
         setSets: (state, data) => {
             state.sets = data;
-            console.log(data);
             state.setsReady = true;
+        },
+        setCards: (state, data) => {
+            let setData = state.sets.findIndex(set => set.code === data[0])
+            state.sets[setData].cards = data[1];
+            state.cardsReady = true;
         },
         toggleCardsReady: (state) => {
             state.cardsReady = !state.cardsReady
@@ -48,5 +47,8 @@ export const pokeStore = new Vuex.Store({
                 console.log(error);
             });
         },
+        toggleCardsReady: ({commit}) => {
+            commit("toggleCardsReady");
+        }
     }
 });

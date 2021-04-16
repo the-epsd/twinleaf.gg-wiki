@@ -64,38 +64,23 @@ export default {
   },
   methods: {
     fetchData() {
-      this.loaded = false;
-      console.log(this.cardsReady.cards);
-      if(this.cardsReady.cards == undefined) {
-        this.$store.dispatch("getCards", {setID: this.$route.params.id});
+      if(this.cardsReady == true) {
+        this.$store.dispatch("toggleCardsReady");
       }
-
-      // this.$http
-      //   .all([
-      //     this.$http.get(
-      //       "https://api.pokemontcg.io/v1/sets/" + this.$route.params.id
-      //     ),
-      //     this.$http.get(
-      //       "https://api.pokemontcg.io/v1/cards?setCode=" +
-      //         this.$route.params.id +
-      //         "&pageSize=1000"
-      //     ),
-      //   ])
-      //   .then(
-      //     this.$http.spread((data1, data2) => {
-      //       // output of req.
-      //       this.loaded = true;
-      //       this.set = data1.data.set;
-      //       this.cards = data2.data.cards;
-      //       console.log(this.cards);
-      //       console.log(this.set);
-      //     })
-      //   );
+      if (this.currentCards.cards != undefined) {
+        this.$store.dispatch("toggleCardsReady");
+          this.cards = this.currentCards.cards;
+      } else {
+        this.$store.dispatch("getCards", { setID: this.$route.params.id });
+        if (this.currentCards.cards == undefined) {
+          this.currentCards.cards = [];
+        }
+      }
     },
   },
   computed: {
     filteredList() {
-      return this.cards.filter((card) => {
+      return this.currentCards.cards.filter((card) => {
         return card.name.toLowerCase().includes(this.filterWord.toLowerCase());
       });
     },
