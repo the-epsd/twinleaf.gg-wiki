@@ -33,14 +33,14 @@
       </div>
       <router-link
         v-for="set in sets"
-        :key="set.code"
-        :to="{ name: 'Set', params: { id: set.code } }"
-        :class="{ active: set.code === $route.params.id }"
+        :key="set.id"
+        :to="{ name: 'Set', params: { id: set.id } }"
+        :class="{ active: set.id === $route.params.id }"
         class="pk-set"
         @click.native="closeMobMenu()"
       >
         <div class="img">
-          <img :src="`${set.symbolUrl}`" loading="lazy" :alt="`${set.name}`" />
+          <img :src="`${set.images.symbol}`" loading="lazy" :alt="`${set.name}`" />
         </div>
         <span>
           {{ set.name }}
@@ -267,6 +267,7 @@ export default {
     transition: all 0.2s ease;
     position: relative;
     width: 290px;
+    min-width: 235px;
     height: 95vh;
     padding: 10px;
     margin: 10px;
@@ -330,6 +331,7 @@ export default {
   @include respond-to("tablet") {
     transition: all 0.2s ease;
     width: 60px;
+    min-width: 60px;
     height: unset;
     .nav-top {
        .min-nav-btn {

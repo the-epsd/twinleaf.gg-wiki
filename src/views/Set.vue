@@ -32,7 +32,7 @@
     </div>
     <div class="cards-container">
       <div class="card" v-for="card in filteredList" :key="card.id">
-        <img :src="card.imageUrl" />
+        <img :src="card.images.small" />
       </div>
     </div>
   </div>

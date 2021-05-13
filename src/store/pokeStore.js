@@ -12,7 +12,7 @@ export const pokeStore = new Vuex.Store({
     },
     getters: {
         setIndex: (state) => (data) => {
-            let setData = state.sets.findIndex(set => set.code === data)
+            let setData = state.sets.findIndex(set => set.id === data)
             return state.sets[setData];
         }
     },
@@ -22,8 +22,9 @@ export const pokeStore = new Vuex.Store({
             state.setsReady = true;
         },
         setCards: (state, data) => {
-            let setData = state.sets.findIndex(set => set.code === data[0])
+            let setData = state.sets.findIndex(set => set.id === data[0])
             state.sets[setData].cards = data[1];
+            console.log(data[1]);
             state.cardsReady = true;
         },
         toggleCardsReady: (state) => {
@@ -32,16 +33,16 @@ export const pokeStore = new Vuex.Store({
     },
     actions: {
         getSets: ({ commit }) => {
-            axios.get("https://api.pokemontcg.io/v1/sets").then(response => {
-                commit("setSets", response.data.sets.reverse());
+            axios.get("https://api.pokemontcg.io/v2/sets").then(response => {
+                commit("setSets", response.data.data.reverse());
             }).catch(function (error) {
                 // handle error
                 console.log(error);
             });
         },
         getCards: ({ commit }, { setID }) => {
-            axios.get("https://api.pokemontcg.io/v1/cards?setCode=" + setID + "&pageSize=1000").then(response => {
-                commit("setCards", [setID, response.data.cards]);
+            axios.get("https://api.pokemontcg.io/v2/cards?q=set.id:" + setID + "&pageSize=1000").then(response => {
+                commit("setCards", [setID, response.data.data]);
             }).catch(function (error) {
                 // handle error
                 console.log(error);
