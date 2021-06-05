@@ -7,12 +7,6 @@
       </div>
       <div class="search-container">
         <div class="search">
-          <input
-            class="input"
-            type="text"
-            placeholder="Search"
-            v-model="filterWord"
-          />
           <svg
             class="icon"
             xmlns="http://www.w3.org/2000/svg"
@@ -23,6 +17,27 @@
                 <rect width="24" height="24" opacity="0" />
                 <path
                   d="M20.71 19.29l-3.4-3.39A7.92 7.92 0 0 0 19 11a8 8 0 1 0-8 8 7.92 7.92 0 0 0 4.9-1.69l3.39 3.4a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42zM5 11a6 6 0 1 1 6 6 6 6 0 0 1-6-6z"
+                />
+              </g>
+            </g>
+          </svg>
+          <input
+            class="input"
+            type="text"
+            placeholder="Search"
+            v-model="filterWord"
+          />
+          <svg class="icon delete" @click="clearFilter()" v-if="filterWord != ''" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+            <g data-name="Layer 2">
+              <g data-name="close">
+                <rect
+                  width="24"
+                  height="24"
+                  transform="rotate(180 12 12)"
+                  opacity="0"
+                />
+                <path
+                  d="M13.41 12l4.3-4.29a1 1 0 1 0-1.42-1.42L12 10.59l-4.29-4.3a1 1 0 0 0-1.42 1.42l4.3 4.29-4.3 4.29a1 1 0 0 0 0 1.42 1 1 0 0 0 1.42 0l4.29-4.3 4.29 4.3a1 1 0 0 0 1.42 0 1 1 0 0 0 0-1.42z"
                 />
               </g>
             </g>
@@ -77,12 +92,19 @@ export default {
         }
       }
     },
+    clearFilter() {
+      this.filterWord = '';
+    }
   },
   computed: {
     filteredList() {
-      return this.currentCards.cards.filter((card) => {
-        return card.name.toLowerCase().includes(this.filterWord.toLowerCase());
-      });
+      if(this.filterWord != '') {
+        return this.currentCards.cards.filter((card) => {
+          return card.name.toLowerCase().includes(this.filterWord.toLowerCase());
+        });
+      }else {
+        return this.currentCards.cards;
+      }
     },
     currentCards() {
       return this.$store.getters.setIndex(this.$route.params.id);
@@ -122,6 +144,7 @@ export default {
   }
 
   .search-container {
+    min-width: 200px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -131,19 +154,26 @@ export default {
     display: flex;
     flex-wrap: wrap;
     height: 20px;
-    border-bottom: 1px solid #bbbbbb;
+    padding: 5px 0px;
+    border-radius: 5px;
+    border: 1px solid var(--primary);
+    background: var(--blue-600);
 
     .icon {
-      fill: #bbbbbb;
+      fill: var(--font);
       width: 20px;
       height: 20px;
+      padding: 0 2px;
+    }
+    
+    .delete {
+      cursor: pointer;
     }
 
     .input {
       background: none;
       border: none;
-      color: #eeeeee;
-      padding-left: 3px;
+      color: var(--font);
       width: 150px;
 
       &::placeholder {
