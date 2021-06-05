@@ -33,7 +33,11 @@ export const pokeStore = new Vuex.Store({
     },
     actions: {
         getSets: ({ commit }) => {
-            axios.get("https://api.pokemontcg.io/v2/sets").then(response => {
+            axios.get("https://api.pokemontcg.io/v2/sets", {
+                headers: {
+                    'X-Api-Key': process.env.VUE_APP_API_KEY
+                }
+            }).then(response => {
                 commit("setSets", response.data.data.reverse());
             }).catch(function (error) {
                 // handle error
@@ -41,14 +45,18 @@ export const pokeStore = new Vuex.Store({
             });
         },
         getCards: ({ commit }, { setID }) => {
-            axios.get("https://api.pokemontcg.io/v2/cards?q=set.id:" + setID + "&pageSize=1000").then(response => {
+            axios.get("https://api.pokemontcg.io/v2/cards?q=set.id:" + setID + "&pageSize=1000", {
+                headers: {
+                    'X-Api-Key': process.env.VUE_APP_API_KEY
+                }
+            }).then(response => {
                 commit("setCards", [setID, response.data.data]);
             }).catch(function (error) {
                 // handle error
                 console.log(error);
             });
         },
-        toggleCardsReady: ({commit}) => {
+        toggleCardsReady: ({ commit }) => {
             commit("toggleCardsReady");
         }
     }

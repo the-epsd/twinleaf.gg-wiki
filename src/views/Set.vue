@@ -64,12 +64,12 @@ export default {
   },
   methods: {
     fetchData() {
-      if(this.cardsReady == true) {
+      if (this.cardsReady == true) {
         this.$store.dispatch("toggleCardsReady");
       }
       if (this.currentCards.cards != undefined) {
         this.$store.dispatch("toggleCardsReady");
-          this.cards = this.currentCards.cards;
+        this.cards = this.currentCards.cards;
       } else {
         this.$store.dispatch("getCards", { setID: this.$route.params.id });
         if (this.currentCards.cards == undefined) {
@@ -95,6 +95,8 @@ export default {
 </script>
 
 <style lang="scss">
+@import "../style/responsive.scss";
+
 .loader {
   height: 100vh;
   display: flex;
@@ -103,10 +105,9 @@ export default {
 }
 
 .header {
-  padding: 10px;
+  padding: 20px;
   padding-bottom: 20px;
-  display: flex;
-  justify-content: space-between;
+  display: block;
 
   h1 {
     font-weight: 500;
@@ -115,8 +116,8 @@ export default {
   }
 
   h3 {
-    font-weight: 700;
-    font-size: 14px;
+    font-weight: 400;
+    font-size: 12px;
     margin-bottom: 5px;
   }
 
@@ -162,7 +163,7 @@ export default {
   display: flex;
   justify-content: flex-start;
   flex-wrap: wrap;
-  padding: 0 10px;
+  padding: 0 20px;
 
   .card {
     height: 335px;
@@ -173,6 +174,25 @@ export default {
       width: auto;
       height: 100%;
     }
+  }
+}
+
+//responsive
+.header {
+  @include respond-to("tablet") {
+    h1 {
+      font-size: 64px;
+    }
+
+    h3 {
+      font-size: 14px;
+    }
+  }
+
+  @include respond-to("phablet") {
+    display: flex;
+    justify-content: space-between;
+    height: 80px;
   }
 }
 </style>

@@ -4,6 +4,7 @@
 ```
 npm install
 ```
+Then copy ```.env.example``` to ```.env``` and change the enviorment variables with your api key.
 
 ### Compiles and hot-reloads for development
 ```
