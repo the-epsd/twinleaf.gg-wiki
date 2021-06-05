@@ -106,7 +106,7 @@ export default {
 @import "../style/responsive.scss";
 
 .nav {
-  z-index: 20;
+  z-index: 1;
   transition: all 0.2s ease;
   position: fixed;
   bottom: 0;

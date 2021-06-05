@@ -58,7 +58,7 @@
     </div>
     <div class="cards-container">
       <div class="card" v-for="card in filteredList" :key="card.id">
-        <img :src="card.images.small" />
+        <card :card="card"></card>
       </div>
     </div>
   </div>
@@ -69,10 +69,12 @@
 
 <script>
 import Loader from "../components/Loader.vue";
+import Card from "../components/Card.vue";
 
 export default {
   components: {
     Loader,
+    Card,
   },
   data() {
     return {
@@ -262,10 +264,6 @@ export default {
     width: 250px;
     margin-bottom: 10px;
 
-    img {
-      width: auto;
-      height: 100%;
-    }
   }
   }
 }
