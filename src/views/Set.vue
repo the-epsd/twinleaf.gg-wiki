@@ -2,8 +2,13 @@
   <div v-if="cardsReady">
     <div class="header">
       <div>
-        <h3>Release date: {{ currentCards.releaseDate }}</h3>
+        <h3>
+          {{ currentCards.series }} &bull; 
+          Released on: {{ currentCards.releaseDate }} &bull; 
+          {{ legalty(currentCards.legalities) }}
+        </h3>
         <h1>{{ currentCards.name }}</h1>
+        <!-- <h3>Release date: {{ currentCards.releaseDate }}</h3> -->
       </div>
       <div class="search-container">
         <div class="search">
@@ -27,7 +32,13 @@
             placeholder="Search"
             v-model="filterWord"
           />
-          <svg class="icon delete" @click="clearFilter()" v-if="filterWord != ''" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
+          <svg
+            class="icon delete"
+            @click="clearFilter()"
+            v-if="filterWord != ''"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 24 24"
+          >
             <g data-name="Layer 2">
               <g data-name="close">
                 <rect
@@ -93,16 +104,33 @@ export default {
       }
     },
     clearFilter() {
-      this.filterWord = '';
+      this.filterWord = "";
+    },
+    legalty(legal) {
+      let message = [];
+      if(legal.standard != undefined) {
+        message.push("Standard: Yes");
+      }
+      if(legal.expanded != undefined) {
+        message.push("Expanded: Yes");
+      }
+
+      if(legal.unlimited != undefined) {
+        message.push("Unlimited: Yes");
+      }
+
+      return message.join(" • ")
     }
   },
   computed: {
     filteredList() {
-      if(this.filterWord != '') {
+      if (this.filterWord != "") {
         return this.currentCards.cards.filter((card) => {
-          return card.name.toLowerCase().includes(this.filterWord.toLowerCase());
+          return card.name
+            .toLowerCase()
+            .includes(this.filterWord.toLowerCase());
         });
-      }else {
+      } else {
         return this.currentCards.cards;
       }
     },
@@ -134,7 +162,8 @@ export default {
   h1 {
     font-weight: 500;
     font-size: 32px;
-    line-height: 32px;
+    line-height: 35px;
+    margin-bottom: 10px;
   }
 
   h3 {
@@ -165,7 +194,7 @@ export default {
       height: 20px;
       padding: 0 2px;
     }
-    
+
     .delete {
       cursor: pointer;
     }
@@ -196,8 +225,8 @@ export default {
   padding: 0 20px;
 
   .card {
-    height: 335px;
-    width: 250px;
+    height: 220px;
+    width: 165px;
     margin-bottom: 10px;
 
     img {
@@ -223,6 +252,21 @@ export default {
     display: flex;
     justify-content: space-between;
     height: 80px;
+  }
+}
+
+.cards-container {
+  @include respond-to("tablet") {
+  .card {
+    height: 335px;
+    width: 250px;
+    margin-bottom: 10px;
+
+    img {
+      width: auto;
+      height: 100%;
+    }
+  }
   }
 }
 </style>

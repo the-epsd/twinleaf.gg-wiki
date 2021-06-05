@@ -24,7 +24,6 @@ export const pokeStore = new Vuex.Store({
         setCards: (state, data) => {
             let setData = state.sets.findIndex(set => set.id === data[0])
             state.sets[setData].cards = data[1];
-            console.log(data[1]);
             state.cardsReady = true;
         },
         toggleCardsReady: (state) => {
