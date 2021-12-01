@@ -3,8 +3,8 @@
     <div class="header">
       <div>
         <h3>
-          {{ currentCards.series }} &bull; 
-          Released on: {{ currentCards.releaseDate }} &bull; 
+          {{ currentCards.series }} &bull; Released on:
+          {{ currentCards.releaseDate }} &bull;
           {{ legalty(currentCards.legalities) }}
         </h3>
         <h1>{{ currentCards.name }}</h1>
@@ -110,19 +110,19 @@ export default {
     },
     legalty(legal) {
       let message = [];
-      if(legal.standard != undefined) {
+      if (legal.standard != undefined) {
         message.push("Standard: Yes");
       }
-      if(legal.expanded != undefined) {
+      if (legal.expanded != undefined) {
         message.push("Expanded: Yes");
       }
 
-      if(legal.unlimited != undefined) {
+      if (legal.unlimited != undefined) {
         message.push("Unlimited: Yes");
       }
 
-      return message.join(" • ")
-    }
+      return message.join(" • ");
+    },
   },
   computed: {
     filteredList() {
@@ -259,12 +259,11 @@ export default {
 
 .cards-container {
   @include respond-to("tablet") {
-  .card {
-    height: 335px;
-    width: 250px;
-    margin-bottom: 10px;
-
-  }
+    .card {
+      height: 335px;
+      width: 250px;
+      margin-bottom: 10px;
+    }
   }
 }
 </style>
