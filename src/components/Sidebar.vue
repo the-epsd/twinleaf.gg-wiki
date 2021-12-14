@@ -267,7 +267,7 @@ export default {
     transition: all 0.2s ease;
     position: relative;
     width: 290px;
-    min-width: 235px;
+    min-width: 260px;
     height: 95vh;
     padding: 10px;
     margin: 10px;

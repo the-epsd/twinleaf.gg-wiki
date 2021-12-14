@@ -111,14 +111,14 @@ export default {
     legalty(legal) {
       let message = [];
       if (legal.standard != undefined) {
-        message.push("Standard: Yes");
+        message.push("Standard: ✅");
       }
       if (legal.expanded != undefined) {
-        message.push("Expanded: Yes");
+        message.push("Expanded: ✅");
       }
 
       if (legal.unlimited != undefined) {
-        message.push("Unlimited: Yes");
+        message.push("Unlimited: ✅");
       }
 
       return message.join(" • ");
@@ -162,9 +162,8 @@ export default {
   display: block;
 
   h1 {
-    font-weight: 500;
+    font-weight: 700;
     font-size: 32px;
-    line-height: 35px;
     margin-bottom: 10px;
   }
 
@@ -222,18 +221,18 @@ export default {
 
 .cards-container {
   display: flex;
-  justify-content: flex-start;
+  justify-content: space-around;
   flex-wrap: wrap;
   padding: 0 20px;
 
   .card {
-    height: 220px;
-    width: 165px;
+    height: auto;
+    width: 100%;
     margin-bottom: 10px;
 
     img {
-      width: auto;
-      height: 100%;
+      width: 100%;
+      height: auto;
     }
   }
 }
@@ -242,7 +241,7 @@ export default {
 .header {
   @include respond-to("tablet") {
     h1 {
-      font-size: 64px;
+      font-size: 48px;
     }
 
     h3 {
@@ -253,14 +252,25 @@ export default {
   @include respond-to("phablet") {
     display: flex;
     justify-content: space-between;
-    height: 80px;
+  }
+}
+
+@include respond-to("mobile-lg") {
+  .cards-container {
+    justify-content: space-between;
+
+    .card {
+      height: 220px;
+      width: 157px;
+      margin-bottom: 10px;
+    }
   }
 }
 
 .cards-container {
   @include respond-to("tablet") {
     .card {
-      height: 335px;
+      height: 348px;
       width: 250px;
       margin-bottom: 10px;
     }
