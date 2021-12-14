@@ -9,29 +9,7 @@
       <template v-slot:body>
         <div class="flex-container-row">
           <img class="large-img" :src="card.images.large" alt="Pokemon card" />
-          <div class="card-details">
-            <h3>Artist: {{ card.artist }}</h3>
-            <div v-if="card.supertype === 'Pokémon'">
-              <h3>Type: {{ card.types[0] }}</h3>
-              <h3>HP: {{ card.hp }}</h3>
-              <h3 v-if="card.evolvesFrom != undefined">
-                Evolved from: {{ card.evolvesFrom }}
-              </h3>
-              <h3 v-if="card.evolvesTo != undefined">
-                Evolves to:
-                <span v-for="poke in card.evolvesTo" :key="poke"
-                  >{{ poke }},</span
-                >
-              </h3>
-              <h3 v-if="card.weaknesses != undefined">
-                Weaknesses:
-                <span v-for="poke in card.weaknesses" :key="poke"
-                  >{{ poke.value }} to {{ poke.type }}</span
-                >
-              </h3>
-            </div>
-          </div>
-        </div>
+         </div>
       </template>
 
       <template v-slot:footer>
@@ -66,8 +44,8 @@ export default {
   flex-direction: column;
 
   .large-img {
-    width: 400px !important;
-    height: auto !important;
+    width: 100%;
+    height: auto;
     margin-right: 10px;
   }
 
@@ -84,6 +62,13 @@ export default {
   .flex-container-row {
     display: flex;
     flex-direction: row;
+    
+    .large-img {
+      width: 400px !important;
+      height: auto !important;
+      margin-right: 10px;
+    }
   }
+
 }
 </style>

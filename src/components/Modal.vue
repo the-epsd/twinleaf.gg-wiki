@@ -79,7 +79,7 @@ export default {
   &__dialog {
     background-color: var(--blue-500);
     position: relative;
-    width: 800px;
+    width: 440px;
     margin: 50px auto;
     display: flex;
     flex-direction: column;
@@ -95,10 +95,11 @@ export default {
     fill: var(--font);
   }
   &__header {
-    padding: 20px 20px 10px;
+    padding: 10px 20px 10px;
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
+    align-items: center;
   }
   &__body {
     padding: 10px 20px 10px;
