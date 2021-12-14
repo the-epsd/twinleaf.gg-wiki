@@ -224,6 +224,7 @@ export default {
   justify-content: space-around;
   flex-wrap: wrap;
   padding: 0 20px;
+  padding-bottom: 100px;
 
   .card {
     height: auto;
@@ -260,7 +261,7 @@ export default {
     justify-content: space-between;
 
     .card {
-      height: 220px;
+      height: auto;
       width: 157px;
       margin-bottom: 10px;
     }
@@ -269,8 +270,10 @@ export default {
 
 .cards-container {
   @include respond-to("tablet") {
+    padding-bottom: 20px;
+
     .card {
-      height: 348px;
+      height: auto;
       width: 250px;
       margin-bottom: 10px;
     }
