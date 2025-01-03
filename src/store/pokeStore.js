@@ -9,13 +9,16 @@ export const pokeStore = new Vuex.Store({
         sets: [],
         setsReady: false,
         cardsReady: false,
+        implementedCards: [], // List of cards that will NOT be greyscale
     },
     getters: {
         setIndex: (state) => (data) => {
             let setData = state.sets.findIndex(set => set.id === data)
             return state.sets[setData];
-        }
-    },
+        },
+        isCardImplemented: (state) => (cardId) => {
+            return state.implementedCards.includes(cardId);
+        },    },
     mutations: {
         setSets: (state, data) => {
             state.sets = data;
@@ -28,7 +31,10 @@ export const pokeStore = new Vuex.Store({
         },
         toggleCardsReady: (state) => {
             state.cardsReady = !state.cardsReady
-        }
+        },
+        setImplementedCards: (state, cardIds) => {
+            state.implementedCards = cardIds;
+        },
     },
     actions: {
         getSets: ({ commit }) => {
@@ -57,6 +63,9 @@ export const pokeStore = new Vuex.Store({
         },
         toggleCardsReady: ({ commit }) => {
             commit("toggleCardsReady");
-        }
+        },
+        setImplementedCards: ({ commit }, cardIds) => {
+            commit('setImplementedCards', cardIds);
+        },
     }
 });

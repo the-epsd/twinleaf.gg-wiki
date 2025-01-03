@@ -57,7 +57,12 @@
       </div>
     </div>
     <div class="cards-container">
-      <div class="card" v-for="card in filteredList" :key="card.id">
+      <div 
+        class="card" 
+        v-for="card in filteredList" 
+        :key="card.id"
+        :class="{ 'greyscale': !isImplemented(card.id) }"
+      >
         <card :card="card"></card>
       </div>
     </div>
@@ -70,6 +75,7 @@
 <script>
 import Loader from "../components/Loader.vue";
 import Card from "../components/Card.vue";
+import implementedCards from '../data/implemented-cards.json'
 
 export default {
   components: {
@@ -82,6 +88,7 @@ export default {
       cards: [],
       loaded: false,
       filterWord: "",
+      implementedCardIds: implementedCards.implementedCardIds
     };
   },
   created() {
@@ -105,6 +112,10 @@ export default {
         }
       }
     },
+        // Add this new method
+    isImplemented(cardId) {
+      return this.implementedCardIds.includes(cardId);
+    },
     clearFilter() {
       this.filterWord = "";
     },
@@ -124,30 +135,44 @@ export default {
       return message.join(" • ");
     },
   },
-  computed: {
-    filteredList() {
-      if (this.filterWord != "") {
-        return this.currentCards.cards.filter((card) => {
-          return card.name
-            .toLowerCase()
-            .includes(this.filterWord.toLowerCase());
-        });
-      } else {
-        return this.currentCards.cards;
-      }
-    },
-    currentCards() {
-      return this.$store.getters.setIndex(this.$route.params.id);
-    },
-    cardsReady() {
-      return this.$store.state.cardsReady;
-    },
+computed: {
+  filteredList() {
+    let baseList = this.currentCards.cards;
+    
+    // Sort cards by numerical ID
+    baseList = baseList.sort((a, b) => {
+      const numA = parseInt(a.id.split('-')[1]);
+      const numB = parseInt(b.id.split('-')[1]);
+      return numA - numB;
+    });
+
+    if (this.filterWord != "") {
+      return baseList.filter((card) => {
+        return card.name
+          .toLowerCase()
+          .includes(this.filterWord.toLowerCase());
+      });
+    } else {
+      return baseList;
+    }
   },
+  currentCards() {
+    return this.$store.getters.setIndex(this.$route.params.id);
+  },
+  cardsReady() {
+    return this.$store.state.cardsReady;
+  },
+}
 };
 </script>
 
 <style lang="scss">
 @import "../style/responsive.scss";
+
+.card.greyscale img {
+  filter: grayscale(100%);
+  opacity: 0.7;
+}
 
 .loader {
   height: 100vh;
