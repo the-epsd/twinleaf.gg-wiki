@@ -3,8 +3,7 @@
     <div class="nav-top">
       <router-link to="/" class="logo">
         <img alt="Vue logo" src="../assets/Logo.svg" />
-        <h1>TCG Wiki</h1>
-      </router-link>
+      </router-link> 
       <div @click="changeMenu()" class="min-nav-btn">
         <svg
           class="icon"
@@ -131,7 +130,6 @@ export default {
     .logo {
       display: none;
       justify-content: flex-start;
-      height: 30px;
       padding: 5px 0 15px 0;
 
       img {

@@ -1,22 +1,21 @@
 <template>
   <div class="home-center">
-    <img class="logo" alt="logo" src="../assets/Logo.svg" />
-    <h1>TCG Wiki</h1>
+    <img class="logo" alt="logo" src="../assets/twinleaf-wiki.webp" width="196px" />
     <p class="small-info">
-      Welcome to TCG Wiki. Click on a set to start looking at cards.
+      Welcome to Twinleaf.gg's Wiki. Click on a set to start looking which cards are currently integrated.<br>
+      If a card is greyed-out, you can request it to be added, which will send a notification to our Discord server.
     </p>
     <div class="links">
-      <a class="link" href="https://github.com/ivoderuever/tcg-wiki" target="_blank">
-        <svg class="icon" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
-          <g data-name="Layer 2">
-            <rect width="24" height="24" opacity="0" />
-            <path
-              d="M16.24 22a1 1 0 0 1-1-1v-2.6a2.15 2.15 0 0 0-.54-1.66 1 1 0 0 1 .61-1.67C17.75 14.78 20 14 20 9.77a4 4 0 0 0-.67-2.22 2.75 2.75 0 0 1-.41-2.06 3.71 3.71 0 0 0 0-1.41 7.65 7.65 0 0 0-2.09 1.09 1 1 0 0 1-.84.15 10.15 10.15 0 0 0-5.52 0 1 1 0 0 1-.84-.15 7.4 7.4 0 0 0-2.11-1.09 3.52 3.52 0 0 0 0 1.41 2.84 2.84 0 0 1-.43 2.08 4.07 4.07 0 0 0-.67 2.23c0 3.89 1.88 4.93 4.7 5.29a1 1 0 0 1 .82.66 1 1 0 0 1-.21 1 2.06 2.06 0 0 0-.55 1.56V21a1 1 0 0 1-2 0v-.57a6 6 0 0 1-5.27-2.09 3.9 3.9 0 0 0-1.16-.88 1 1 0 1 1 .5-1.94 4.93 4.93 0 0 1 2 1.36c1 1 2 1.88 3.9 1.52a3.89 3.89 0 0 1 .23-1.58c-2.06-.52-5-2-5-7a6 6 0 0 1 1-3.33.85.85 0 0 0 .13-.62 5.69 5.69 0 0 1 .33-3.21 1 1 0 0 1 .63-.57c.34-.1 1.56-.3 3.87 1.2a12.16 12.16 0 0 1 5.69 0c2.31-1.5 3.53-1.31 3.86-1.2a1 1 0 0 1 .63.57 5.71 5.71 0 0 1 .33 3.22.75.75 0 0 0 .11.57 6 6 0 0 1 1 3.34c0 5.07-2.92 6.54-5 7a4.28 4.28 0 0 1 .22 1.67V21a1 1 0 0 1-.94 1z"
-            />
-          </g>
-        </svg>
+      <a class="link" href="https://discord.com/invite/Y9XKnC8dE5" target="_blank">
+        <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-white-icon.png" width="32px">
       </a>
     </div>
+    <br>
+    <br>
+      Twinleaf.gg Wiki is based on TCG-Wiki by Ivo de Ruever<br>
+      <a class="link" href="https://github.com/ivoderuever/tcg-wiki" target="_blank">
+        <img src="https://img.icons8.com/ios11/512/FFFFFF/github.png" width="32px">
+      </a>
   </div>
 </template>
 
@@ -44,13 +43,12 @@ export default {
 }
 
 .logo {
-  width: auto;
-  height: 80px;
+  height: auto;
   margin-bottom: 10px;
 }
 
 .small-info {
-  width: 350px;
+  width: 450px;
   text-align: center;
   padding: 10px 10px;
 }

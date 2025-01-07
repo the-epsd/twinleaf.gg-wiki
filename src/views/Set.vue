@@ -61,12 +61,27 @@
         class="card" 
         v-for="card in filteredList" 
         :key="card.id"
-        :class="{ 'greyscale': !isImplemented(card.id) }"
+        :class="{
+          'greyscale': !isImplemented(card.id),
+          'bugged': isBugged(card.id)
+        }"
       >
+      <div class="card-wrapper">
         <card :card="card"></card>
+<button 
+  v-if="!isImplemented(card.id) && !isBugged(card.id)" 
+  @click="sendToDiscord(card)"
+  :class="['request-button', { 'clicked': clickedCards[card.id] }]"
+  :disabled="clickedCards[card.id]"
+>
+  <span v-if="!clickedCards[card.id]">Request Card</span>
+  <span v-else>👍 Requested!</span>
+</button>
+
       </div>
     </div>
   </div>
+</div>
   <div v-else class="loader">
     <Loader></Loader>
   </div>
@@ -76,24 +91,29 @@
 import Loader from "../components/Loader.vue";
 import Card from "../components/Card.vue";
 import implementedCards from '../data/implemented-cards.json'
+import buggedCards from '../data/bugged-cards.json'
 
 export default {
   components: {
     Loader,
     Card,
   },
-  data() {
-    return {
-      set: [],
-      cards: [],
-      loaded: false,
-      filterWord: "",
-      implementedCardIds: implementedCards.implementedCardIds
-    };
-  },
-  created() {
-    this.fetchData();
-  },
+data() {
+  return {
+    set: [],
+    cards: [],
+    loaded: false,
+    filterWord: "",
+    implementedCardIds: implementedCards.implementedCardIds,
+    buggedCardIds: buggedCards.buggedCardIds,
+    clickedCards: {}
+  };
+},
+
+created() {
+  this.fetchData();
+  this.clickedCards = JSON.parse(localStorage.getItem('requestedCards')) || {};
+},
   watch: {
     $route: "fetchData",
   },
@@ -112,9 +132,33 @@ export default {
         }
       }
     },
-        // Add this new method
     isImplemented(cardId) {
       return this.implementedCardIds.includes(cardId);
+    },
+    isBugged(cardId) {
+      return this.buggedCardIds.includes(cardId);
+    },
+    sendToDiscord(card) {
+    this.$set(this.clickedCards, card.id, true)
+    localStorage.setItem('requestedCards', JSON.stringify(this.clickedCards))
+      const webhookUrl = 'https://discord.com/api/webhooks/1325950566379290725/u99T5BE8tlZsKuSYItrfOESDQKLj30R_7Y_Eub1aL65_oPBxjPhH14mNHe3Fl42JosIm'
+      const message = {
+      content: `Card Implementation Request: ${card.name} (${card.id})`,
+      embeds: [{
+        title: card.name,
+        description: `Set: ${card.set.name}`,
+        image: {
+          url: card.images.large
+        }
+      }]
+    }
+      fetch(webhookUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+      },
+        body: JSON.stringify(message)
+      })
     },
     clearFilter() {
       this.filterWord = "";
@@ -156,13 +200,13 @@ computed: {
       return baseList;
     }
   },
-  currentCards() {
-    return this.$store.getters.setIndex(this.$route.params.id);
+    currentCards() {
+      return this.$store.getters.setIndex(this.$route.params.id);
   },
-  cardsReady() {
-    return this.$store.state.cardsReady;
+    cardsReady() {
+      return this.$store.state.cardsReady;
   },
-}
+  }
 };
 </script>
 
@@ -172,6 +216,54 @@ computed: {
 .card.greyscale img {
   filter: grayscale(100%);
   opacity: 0.7;
+}
+
+.card.bugged img {
+  filter: sepia(100%) saturate(300%) brightness(70%) hue-rotate(300deg);
+}
+
+.card-wrapper {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.request-button {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: var(--primary);
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.request-button {
+  transition: all 0.3s ease;
+  
+  &.clicked {
+    background: #4CAF50;
+    transform: translate(-50%, -50%) scale(0.95);
+    cursor: default;
+  }
+  
+  &:not(.clicked):hover {
+    transform: translate(-50%, -50%) scale(1.05);
+  }
+}
+
+@keyframes thumbsUp {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2) rotate(20deg); }
+  100% { transform: scale(1); }
+}
+
+.clicked span {
+  display: inline-block;
+  animation: thumbsUp 0.5s ease;
 }
 
 .loader {
@@ -246,10 +338,11 @@ computed: {
 
 .cards-container {
   display: flex;
-  justify-content: space-around;
+  justify-content: flex-start;
   flex-wrap: wrap;
   padding: 0 20px;
   padding-bottom: 100px;
+  gap: 10px;
 
   .card {
     height: auto;
@@ -283,7 +376,8 @@ computed: {
 
 @include respond-to("mobile-lg") {
   .cards-container {
-    justify-content: space-between;
+    justify-content: flex-start;
+    gap: 10px;
 
     .card {
       height: auto;
@@ -296,6 +390,7 @@ computed: {
 .cards-container {
   @include respond-to("tablet") {
     padding-bottom: 20px;
+    gap: 10px;
 
     .card {
       height: auto;
