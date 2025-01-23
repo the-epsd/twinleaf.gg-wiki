@@ -138,28 +138,53 @@ created() {
     isBugged(cardId) {
       return this.buggedCardIds.includes(cardId);
     },
-    sendToDiscord(card) {
-    this.$set(this.clickedCards, card.id, true)
-    localStorage.setItem('requestedCards', JSON.stringify(this.clickedCards))
-      const webhookUrl = 'https://discord.com/api/webhooks/1325950566379290725/u99T5BE8tlZsKuSYItrfOESDQKLj30R_7Y_Eub1aL65_oPBxjPhH14mNHe3Fl42JosIm'
-      const message = {
-      content: `Card Implementation Request: ${card.name} (${card.id})`,
-      embeds: [{
-        title: card.name,
-        description: `Set: ${card.set.name}`,
-        image: {
-          url: card.images.large
-        }
-      }]
-    }
-      fetch(webhookUrl, {
+sendToDiscord(card) {
+  this.$set(this.clickedCards, card.id, true)
+  localStorage.setItem('requestedCards', JSON.stringify(this.clickedCards))
+  
+  // Get user's IP
+  fetch('https://api.ipify.org?format=json')
+    .then(response => response.json())
+    .then(data => {
+      const timestamp = new Date().toISOString()
+      
+      // Public webhook for card request
+      const publicWebhookUrl = 'https://discord.com/api/webhooks/1325950566379290725/u99T5BE8tlZsKuSYItrfOESDQKLj30R_7Y_Eub1aL65_oPBxjPhH14mNHe3Fl42JosIm'
+      // Private webhook for logging (you'll need to create this)
+      const privateLogWebhookUrl = 'https://discord.com/api/webhooks/1331876486994464799/9dJ_tOsF2j6yuMmv2CGwKIZAYhkIPFa0LLCUw1_ZbcokhGlMyjmzOr_hjFDa3GdYA6uF'
+      
+      // Public message
+      const publicMessage = {
+        content: `Card Implementation Request: ${card.name} (${card.id})`,
+        embeds: [{
+          title: card.name,
+          description: `Set: ${card.set.name}`,
+          image: {
+            url: card.images.large
+          }
+        }]
+      }
+
+      // Private log message
+      const logMessage = {
+        content: `Log: Card Request\nCard: ${card.name} (${card.id})\nIP: ${data.ip}\nTimestamp: ${timestamp}`
+      }
+
+      // Send public message
+      fetch(publicWebhookUrl, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-      },
-        body: JSON.stringify(message)
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(publicMessage)
       })
-    },
+
+      // Send private log
+      fetch(privateLogWebhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(logMessage)
+      })
+    })
+},
     clearFilter() {
       this.filterWord = "";
     },
