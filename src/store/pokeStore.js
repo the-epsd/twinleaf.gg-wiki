@@ -18,7 +18,8 @@ export const pokeStore = new Vuex.Store({
         },
         isCardImplemented: (state) => (cardId) => {
             return state.implementedCards.includes(cardId);
-        },    },
+        },
+    },
     mutations: {
         setSets: (state, data) => {
             state.sets = data;
@@ -43,7 +44,7 @@ export const pokeStore = new Vuex.Store({
                     'X-Api-Key': process.env.VUE_APP_API_KEY
                 }
             }).then(response => {
-                commit("setSets", response.data.data.reverse());
+                commit("setSets", response.data.data.sort((a, b) => new Date(b.releaseDate) - new Date(a.releaseDate)));
             }).catch(function (error) {
                 // handle error
                 console.log(error);
