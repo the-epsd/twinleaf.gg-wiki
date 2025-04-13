@@ -160,8 +160,8 @@ export default {
       .icon {
         transition: all 0.2s ease;
         transform: rotate(90deg);
-        width: auto;
-        height: 30px;
+        width: 30px;
+        height: auto;
         fill: var(--font);
       }
     }
@@ -193,9 +193,9 @@ export default {
       padding-right: 10px;
       img {
         display: block;
-        height: 30px;
-        width: auto;
-        max-width: 30px;
+        height: 100%;
+        width: 100%;
+        object-fit: contain; /* Maintain aspect ratio */
         margin: 0 auto;
       }
     }
@@ -295,8 +295,8 @@ export default {
         .icon {
           transition: all 0.2s ease;
           transform: rotate(-180deg);
-          width: auto;
-          height: 22px;
+          width: 22px;
+          height: auto;
           fill: var(--font);
         }
       }

@@ -7,15 +7,11 @@
     </p>
     <div class="links">
       <a class="link" href="https://discord.com/invite/Y9XKnC8dE5" target="_blank">
-        <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-white-icon.png" width="32px">
+        <img src="https://img.icons8.com/ios11/512/FFFFFF/discord-logo.png" width="32px">
       </a>
     </div>
     <br>
     <br>
-      Twinleaf.gg Wiki is based on TCG-Wiki by Ivo de Ruever<br>
-      <a class="link" href="https://github.com/ivoderuever/tcg-wiki" target="_blank">
-        <img src="https://img.icons8.com/ios11/512/FFFFFF/github.png" width="32px">
-      </a>
   </div>
 </template>
 
